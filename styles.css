@@ -1,40 +1,78 @@
+
 .calculator {
-    margin: 80px;
+    margin: 110px;
     width: 600px;
     height: 800px;
     border: 4px solid black;
     display: flex;
     flex-direction:column; 
     justify-content: center;
-    align-items: center;  
-
+    align-items: center;
+    flex-shrink: 0; 
+    border-radius: 20px;
+    background-color:lightgray;
 }
 
 .display {
+    margin-top: 40px;
     width: 500px;
     height: 150px;
-    border: 4px solid black;
     border: 2px solid black;
     text-align: end;
-    font-size: 100px;
+    padding-top: 25px;
+    padding-right: 20px;
+    font-size: 70px;
+    border-radius: 10px;
+    background-color: white;
 }
 
 .keyPad {
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .keyPad button {
-    width: 100px;
-    height: 100px;
-}
-
-#divBtn, #multBtn, #subBtn, #addBtn {
-    margin-left: 45px;
+    margin: 10px;
+    width: 108px;
+    height: 80px;
+    font-size:x-large;
+    background-color: white;
+    font-family:revert;
+    border-radius: 30px;
 }
 
 body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
 }
+
+#clearBtn {
+    border: 2px solid rgb(193, 115, 128);;
+    background-color: pink;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+#deleteBtn {
+    border: 2px solid rgb(132, 217, 217);
+    background-color: lightcyan;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+#divBtn, #multBtn, #subBtn, #addBtn, #equalBtn {
+    border: 2px solid rgb(255, 140, 0);
+    background-color: rgb(253, 172, 72);
+    font-size:xx-large;
+    font-weight: bolder;
+    color:white;
+}
+
+#signBtn {
+    border: 2px solid rgb(231, 231, 63);
+    background-color: rgb(255, 255, 151);
+}
+
 
