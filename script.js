@@ -1,49 +1,98 @@
-function add(num1, num2) {
-    return num1 + num2;
-}
-
-function subtract(num1, num2) {
-    return num1 - num2;
-}
-
-function multiply(num1, num2) {
-    return num1 * num2;
-}
-
-function divide(num1, num2) {
-    if (num2 == 0) {
-        return "ERR:Div 0";
-    }
-    return num1 / num2;
-}
-
-function operate(num1, num2, operator) {
-    if (operator === "add") {
-        return add(num1, num2);
-    }
-    else if (operator === "subtract") {
-        return subtract(num1, num2);
-    }
-    else if (operator === "multiply") {
-        return multiply(num1, num2);
+function operate() {
+    num = parseFloat(displayBtn.textContent, 10);
+    
+    if (operator === "" || !(hasCalculated)) {
+        total = num;
+        eqDisplay.textContent = "";
     }
     else {
-        return divide(num1, num2);
+        if (operator === "/" && num === 0) {
+            clear();
+            rewrite = true;
+            displayBtn.textContent = "Division by zero not allowed!"
+            return;
+        } else {
+            calculate();
+        }
+    }
+
+    if (!Number.isInteger(total)) total = total.toFixed(2);
+
+    if (equals) {
+        eqDisplay.textContent += num + " = ";
+        let copy = total;
+        displayBtn.textContent = copy;
+        total = 0;
+        hasCalculated = false;
+    }
+    
+    else {
+        eqDisplay.textContent += num + " " + operator + " ";
+        displayBtn.textContent = total;
+        hasCalculated = true;
+    }
+    rewrite = true;
+}
+
+function calculate() {
+    if (operator === "+") {
+        total += num;
+    }
+    else if (operator === "-") {
+        total -= num;
+    }
+    else if (operator === "*") {
+        total *= num;
+    }
+    else if (operator === "/") {
+        total /= num;
+    }
+    else {
+        total %= num;
     }
 }
-let num1 = "";
-let num2 = "";
+
+function displayNums() {
+    if (displayBtn.textContent === "0" || rewrite) {
+        displayBtn.textContent = numInput;
+        rewrite = false;
+    }
+    else {
+        displayBtn.textContent += numInput;
+    } 
+}
+
+function clear() {
+    displayBtn.textContent = "0";
+    eqDisplay.textContent = "";
+    total = 0;
+    num = "";
+    rewrite = false;
+    numInput = "";
+    operator = "";
+    equals = false;
+    hasCalculated = false;  
+}
+
+let total = 0;
+let num = "";
+let rewrite = false;
+let numInput = "";
 let operator = "";
-let displayValue = "";
+let equals = false;
+let hasCalculated = false;
 
-
-const displayBtn = document.querySelector(".display");
+const eqDisplay = document.querySelector(".eqDisplay");
+const displayBtn = document.querySelector(".numDisplay");
 const clearBtn = document.querySelector("#clearBtn");
 const divBtn = document.querySelector("#divBtn");
 const multBtn = document.querySelector("#multBtn");
 const subBtn = document.querySelector("#subBtn");
 const addBtn = document.querySelector("#addBtn");
 const equalBtn = document.querySelector("#equalBtn");
+const periodBtn = document.querySelector("#periodBtn");
+const modBtn = document.querySelector("#modBtn");
+const deleteBtn = document.querySelector("#deleteBtn");
 
 const sevenBtn = document.querySelector("#sevenBtn");
 const eightBtn = document.querySelector("#eightBtn");
@@ -54,90 +103,102 @@ const sixBtn = document.querySelector("#sixBtn");
 const threeBtn = document.querySelector("#threeBtn");
 const twoBtn = document.querySelector("#twoBtn");
 const oneBtn = document.querySelector("#oneBtn");
-
 const keyPadBtn = document.querySelector(".keyPad");
 
-
 clearBtn.addEventListener("click", () => {
-    displayBtn.textContent = "";
-    num1 = "";
-    num2 = "";
-    operator = ""
+    clear();
+});
+
+deleteBtn.addEventListener("click", () => {
+    displayBtn.textContent = displayBtn.textContent.slice(0, displayBtn.textContent.length - 1)
 });
 
 signBtn.addEventListener("click", () => {
-    const sign = displayBtn.textContent.charAt(0);
-    if (sign === '-') {
+    const firstChar = displayBtn.textContent.charAt(0);
+    if (firstChar === '-') {
         displayBtn.textContent = displayBtn.textContent.slice(1);
     }
     else {
-        displayBtn.textContent = "-" + displayBtn.textContent;
+        if (firstChar !== '0') {
+            displayBtn.textContent = "-" + displayBtn.textContent;
+        } 
     }
+});
+
+modBtn.addEventListener("click", () => {
+    operator = "%"; 
+    operate();
+});
+
+periodBtn.addEventListener("click", () => {
+    displayBtn.textContent += ".";
 });
 
 
 addBtn.addEventListener("click", () => {
-    num1 = parseFloat(displayBtn.textContent, 10);
-    displayBtn.textContent = "";
-    operator = "add";
+    operator = "+"; 
+    operate();
 });
 
 subBtn.addEventListener("click", () => {
-    num1 = parseFloat(displayBtn.textContent, 10);
-    displayBtn.textContent = "";
-    operator = "subtract";
+    operator = "-"; 
+    operate();
 });
 
 multBtn.addEventListener("click", () => {
-    num1 = parseFloat(displayBtn.textContent, 10);
-    displayBtn.textContent = "";
-    operator = "multiply";
+    operator = "*"; 
+    operate();
 });
 
 divBtn.addEventListener("click", () => {
-    num1 = parseFloat(displayBtn.textContent, 10);
-    displayBtn.textContent = "";
-    operator = "divide";
+    operator = "/"; 
+    operate();
 });
 
 equalBtn.addEventListener("click", () => {
-    if ((num1 !== "") && (operator !== "")) {
-        console.log("inside");
-        num2 = parseFloat(displayBtn.textContent, 10);
-        displayBtn.textContent = "";
-        const calculation = operate(num1, num2, operator);
-        num1 = calculation;
-        displayBtn.textContent = calculation;
-    }
+    equals = true;
+    operate();
+    equals = false;
 });
 
 sevenBtn.addEventListener("click", () => {
-    displayBtn.textContent += "7";
+    numInput = "7";
+    displayNums();
 });
 eightBtn.addEventListener("click", () => {
-    displayBtn.textContent += "8";
+    numInput = "8";
+    displayNums();
 });
 nineBtn.addEventListener("click", () => {
-    displayBtn.textContent += "9";
+    numInput = "9";
+    displayNums();
 });
 fourBtn.addEventListener("click", () => {
-    displayBtn.textContent += "4";
+    numInput = "4";
+    displayNums();
 });
 fiveBtn.addEventListener("click", () => {
-    displayBtn.textContent += "5";
+    numInput = "5";
+    displayNums();
 });
 sixBtn.addEventListener("click", () => {
-    displayBtn.textContent += "6";
+    numInput = "6";
+    displayNums();
 });
 threeBtn.addEventListener("click", () => {
-    displayBtn.textContent += "3";
+    numInput = "3";
+    displayNums();
 });
 twoBtn.addEventListener("click", () => {
-    displayBtn.textContent += "2";
+    numInput = "2";
+    displayNums();
 });
 oneBtn.addEventListener("click", () => {
-    displayBtn.textContent += "1";
+    numInput = "1";
+    displayNums();
 });
 zeroBtn.addEventListener("click", () => {
-    displayBtn.textContent += "0";
+    numInput = "0";
+    displayNums();
+    
 });
