@@ -1,5 +1,6 @@
 function operate() {
     num = parseFloat(displayBtn.textContent, 10);
+    console.log("inside num: " + num + " " + typeof num);
     
     if (operator === "" || !(hasCalculated)) {
         total = num;
@@ -9,14 +10,14 @@ function operate() {
         if (operator === "/" && num === 0) {
             clear();
             rewrite = true;
-            displayBtn.textContent = "Division by zero not allowed!"
+            displayBtn.textContent = "Cannot divide by zero!"
             return;
         } else {
             calculate();
         }
     }
 
-    if (!Number.isInteger(total)) total = total.toFixed(2);
+    if (!Number.isInteger(total)) total = parseFloat(total.toFixed(2));
 
     if (equals) {
         eqDisplay.textContent += num + " = ";
@@ -52,7 +53,7 @@ function calculate() {
     }
 }
 
-function displayNums() {
+function displayNums(numInput) {
     if (displayBtn.textContent === "0" || rewrite) {
         displayBtn.textContent = numInput;
         rewrite = false;
@@ -77,7 +78,6 @@ function clear() {
 let total = 0;
 let num = "";
 let rewrite = false;
-let numInput = "";
 let operator = "";
 let equals = false;
 let hasCalculated = false;
@@ -162,43 +162,32 @@ equalBtn.addEventListener("click", () => {
 });
 
 sevenBtn.addEventListener("click", () => {
-    numInput = "7";
-    displayNums();
+    displayNums("7");
 });
 eightBtn.addEventListener("click", () => {
-    numInput = "8";
-    displayNums();
+    displayNums("8");
 });
 nineBtn.addEventListener("click", () => {
-    numInput = "9";
-    displayNums();
+    displayNums("9");
 });
 fourBtn.addEventListener("click", () => {
-    numInput = "4";
-    displayNums();
+    displayNums("4");
 });
 fiveBtn.addEventListener("click", () => {
-    numInput = "5";
-    displayNums();
+    displayNums("5");
 });
 sixBtn.addEventListener("click", () => {
-    numInput = "6";
-    displayNums();
+    displayNums("6");
 });
 threeBtn.addEventListener("click", () => {
-    numInput = "3";
-    displayNums();
+    displayNums("3");
 });
 twoBtn.addEventListener("click", () => {
-    numInput = "2";
-    displayNums();
+    displayNums("2");
 });
 oneBtn.addEventListener("click", () => {
-    numInput = "1";
-    displayNums();
+    displayNums("1");
 });
 zeroBtn.addEventListener("click", () => {
-    numInput = "0";
-    displayNums();
-    
+    displayNums("0");
 });
