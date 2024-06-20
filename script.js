@@ -1,41 +1,39 @@
 function operate() {
-    num = parseFloat(displayBtn.textContent, 10);
-    console.log("inside num: " + num + " " + typeof num);
+    let num = parseFloat(displayBtn.textContent, 10);
     
-    if (operator === "" || !(hasCalculated)) {
-        total = num;
-        eqDisplay.textContent = "";
+    if (!(isCalculating)) {
+         total = num;
+         eqDisplay.textContent = "";
     }
     else {
         if (operator === "/" && num === 0) {
             clear();
-            rewrite = true;
             displayBtn.textContent = "Cannot divide by zero!"
             return;
         } else {
-            calculate();
+            calculate(num);
         }
     }
 
     if (!Number.isInteger(total)) total = parseFloat(total.toFixed(2));
 
-    if (equals) {
+    if (isEqualSignClicked) {
         eqDisplay.textContent += num + " = ";
         let copy = total;
         displayBtn.textContent = copy;
         total = 0;
-        hasCalculated = false;
+        isCalculating = false;
     }
     
     else {
         eqDisplay.textContent += num + " " + operator + " ";
         displayBtn.textContent = total;
-        hasCalculated = true;
+        isCalculating = true;
     }
-    rewrite = true;
+    shouldRewriteDisplay = true;
 }
 
-function calculate() {
+function calculate(num) {
     if (operator === "+") {
         total += num;
     }
@@ -54,9 +52,9 @@ function calculate() {
 }
 
 function displayNums(numInput) {
-    if (displayBtn.textContent === "0" || rewrite) {
+    if (shouldRewriteDisplay) {
         displayBtn.textContent = numInput;
-        rewrite = false;
+        shouldRewriteDisplay = false;
     }
     else {
         displayBtn.textContent += numInput;
@@ -67,20 +65,17 @@ function clear() {
     displayBtn.textContent = "0";
     eqDisplay.textContent = "";
     total = 0;
-    num = "";
-    rewrite = false;
-    numInput = "";
+    shouldRewriteDisplay = true;
     operator = "";
-    equals = false;
-    hasCalculated = false;  
+    isEqualSignClicked = false;
+    isCalculating = false;  
 }
 
 let total = 0;
-let num = "";
-let rewrite = false;
+let shouldRewriteDisplay = true;
 let operator = "";
-let equals = false;
-let hasCalculated = false;
+let isEqualSignClicked = false;
+let isCalculating = false;
 
 const eqDisplay = document.querySelector(".eqDisplay");
 const displayBtn = document.querySelector(".numDisplay");
@@ -156,9 +151,9 @@ divBtn.addEventListener("click", () => {
 });
 
 equalBtn.addEventListener("click", () => {
-    equals = true;
+    isEqualSignClicked = true;
     operate();
-    equals = false;
+    isEqualSignClicked = false;
 });
 
 sevenBtn.addEventListener("click", () => {
