@@ -1,3 +1,53 @@
+let total = 0;
+let shouldRewriteDisplay = true;
+let operator = "";
+let isEqualSignClicked = false;
+let isCalculating = false;
+
+const eqDisplay = document.querySelector(".eqDisplay");
+const displayBtn = document.querySelector(".numDisplay");
+
+const equalBtn = document.querySelector("#equalBtn");
+
+document.querySelectorAll(".numButton").forEach(button => {
+    button.addEventListener("click", () => displayNums(button.textContent));
+});
+
+document.querySelectorAll(".operatorButton").forEach(button => {
+    button.addEventListener("click", () => {
+        operator = button.textContent;
+        operate();
+    });
+});
+
+document.querySelector("#equalBtn").addEventListener("click", ()=> {
+    isEqualSignClicked = true;
+    operate();
+    isEqualSignClicked = false;
+})
+
+document.querySelector("#periodBtn").addEventListener("click", ()=> {
+    if (!displayBtn.textContent.includes('.')) {
+        displayBtn.textContent += ".";
+    }
+});
+
+document.querySelector("#signBtn").addEventListener("click", () => {
+    const firstChar = displayBtn.textContent.charAt(0);
+    if (firstChar === '-') {
+        displayBtn.textContent = displayBtn.textContent.slice(1);
+    }
+    else {
+        if (firstChar !== '0') {
+            displayBtn.textContent = "-" + displayBtn.textContent;
+        } 
+    }
+});
+
+document.querySelector("#deleteBtn").addEventListener("click", ()=> displayBtn.textContent = displayBtn.textContent.slice(0, displayBtn.textContent.length - 1) || 0);
+
+document.querySelector("#clearBtn").addEventListener("click", () => clear());
+
 function operate() {
     let num = parseFloat(displayBtn.textContent, 10);
     
@@ -40,10 +90,10 @@ function calculate(num) {
     else if (operator === "-") {
         total -= num;
     }
-    else if (operator === "*") {
+    else if (operator === "×") {
         total *= num;
     }
-    else if (operator === "/") {
+    else if (operator === "÷") {
         total /= num;
     }
     else {
@@ -52,7 +102,7 @@ function calculate(num) {
 }
 
 function displayNums(numInput) {
-    if (shouldRewriteDisplay) {
+    if (shouldRewriteDisplay || displayBtn.textContent === "0") {
         displayBtn.textContent = numInput;
         shouldRewriteDisplay = false;
     }
@@ -70,119 +120,3 @@ function clear() {
     isEqualSignClicked = false;
     isCalculating = false;  
 }
-
-let total = 0;
-let shouldRewriteDisplay = true;
-let operator = "";
-let isEqualSignClicked = false;
-let isCalculating = false;
-
-const eqDisplay = document.querySelector(".eqDisplay");
-const displayBtn = document.querySelector(".numDisplay");
-const clearBtn = document.querySelector("#clearBtn");
-const divBtn = document.querySelector("#divBtn");
-const multBtn = document.querySelector("#multBtn");
-const subBtn = document.querySelector("#subBtn");
-const addBtn = document.querySelector("#addBtn");
-const equalBtn = document.querySelector("#equalBtn");
-const periodBtn = document.querySelector("#periodBtn");
-const modBtn = document.querySelector("#modBtn");
-const deleteBtn = document.querySelector("#deleteBtn");
-
-const sevenBtn = document.querySelector("#sevenBtn");
-const eightBtn = document.querySelector("#eightBtn");
-const nineBtn = document.querySelector("#nineBtn");
-const fourBtn = document.querySelector("#fourBtn");
-const fiveBtn = document.querySelector("#fiveBtn");
-const sixBtn = document.querySelector("#sixBtn");
-const threeBtn = document.querySelector("#threeBtn");
-const twoBtn = document.querySelector("#twoBtn");
-const oneBtn = document.querySelector("#oneBtn");
-const keyPadBtn = document.querySelector(".keyPad");
-
-clearBtn.addEventListener("click", () => {
-    clear();
-});
-
-deleteBtn.addEventListener("click", () => {
-    displayBtn.textContent = displayBtn.textContent.slice(0, displayBtn.textContent.length - 1)
-});
-
-signBtn.addEventListener("click", () => {
-    const firstChar = displayBtn.textContent.charAt(0);
-    if (firstChar === '-') {
-        displayBtn.textContent = displayBtn.textContent.slice(1);
-    }
-    else {
-        if (firstChar !== '0') {
-            displayBtn.textContent = "-" + displayBtn.textContent;
-        } 
-    }
-});
-
-modBtn.addEventListener("click", () => {
-    operator = "%"; 
-    operate();
-});
-
-periodBtn.addEventListener("click", () => {
-    displayBtn.textContent += ".";
-});
-
-
-addBtn.addEventListener("click", () => {
-    operator = "+"; 
-    operate();
-});
-
-subBtn.addEventListener("click", () => {
-    operator = "-"; 
-    operate();
-});
-
-multBtn.addEventListener("click", () => {
-    operator = "*"; 
-    operate();
-});
-
-divBtn.addEventListener("click", () => {
-    operator = "/"; 
-    operate();
-});
-
-equalBtn.addEventListener("click", () => {
-    isEqualSignClicked = true;
-    operate();
-    isEqualSignClicked = false;
-});
-
-sevenBtn.addEventListener("click", () => {
-    displayNums("7");
-});
-eightBtn.addEventListener("click", () => {
-    displayNums("8");
-});
-nineBtn.addEventListener("click", () => {
-    displayNums("9");
-});
-fourBtn.addEventListener("click", () => {
-    displayNums("4");
-});
-fiveBtn.addEventListener("click", () => {
-    displayNums("5");
-});
-sixBtn.addEventListener("click", () => {
-    displayNums("6");
-});
-threeBtn.addEventListener("click", () => {
-    displayNums("3");
-});
-twoBtn.addEventListener("click", () => {
-    displayNums("2");
-});
-oneBtn.addEventListener("click", () => {
-    displayNums("1");
-});
-zeroBtn.addEventListener("click", () => {
-    displayNums("0");
-});
